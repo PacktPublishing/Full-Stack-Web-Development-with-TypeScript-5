@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "module": "es2022",
+    "target": "es2017",
+    "moduleResolution": "node",
+    "rootDir": ".",
+    "sourceMap": true,
+    "strictNullChecks": true
+  },
+  "includes": [
+    "main.ts"
+  ]
+}
