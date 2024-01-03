@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "bun run --hot src/index.ts"
+  },
+  "dependencies": {
+    "hono": "^3.11.11"
+  },
+  "devDependencies": {
+    "@hono/eslint-config": "^0.0.3",
+    "bun-types": "^1.0.7",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2"
+  }
+}
