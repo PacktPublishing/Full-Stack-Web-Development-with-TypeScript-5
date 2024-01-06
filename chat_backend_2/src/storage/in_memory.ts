@@ -10,8 +10,8 @@ export class SimpleInMemoryResource<T extends S & DBEntity, S>
     const fullData = {
       ...data,
       id: this.data.length.toString(),
-      createdAt: Date.now().valueOf(),
-      updatedAt: Date.now().valueOf(),
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
     } as T;
     this.data.push(fullData);
     return fullData;
@@ -41,22 +41,19 @@ export class SimpleInMemoryResource<T extends S & DBEntity, S>
     );
   }
   async findAll(data: Partial<T>): Promise<T[]> {
-    return this.data.filter((x) => {
+    const res = this.data.filter((x) => {
       for (const key in data) {
         if (data[key] != x[key]) return false;
       }
       return true;
     });
-  }
-
-  async getAll(): Promise<T[]> {
-    return this.data;
+    return res;
   }
 
   async update(id: string, data: S): Promise<T | null> {
     const entity = await this.get(id);
     if (entity) {
-      const newEntity = { ...entity, ...data };
+      const newEntity = { ...entity, ...data, updatedAt: Date.now() };
       await this.delete(id);
       this.data.push(newEntity);
       return newEntity;

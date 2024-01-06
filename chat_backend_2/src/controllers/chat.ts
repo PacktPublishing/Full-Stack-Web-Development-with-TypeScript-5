@@ -1,53 +1,60 @@
 import { Hono } from "hono";
+import type { ContextVariables } from "../constants";
 import type {
   DBChat,
   DBCreateChat,
   DBCreateMessage,
   DBMessage,
 } from "../models/db";
-import { SimpleInMemoryResource } from "../storage/in_memory";
+import type { IDatabaseResource } from "../storage/types";
 
-export const CHAT_PREFIX = "/chat";
+export const CHAT_PREFIX = "/chat/";
+const CHAT_ROUTE = "";
+const CHAT_MESSAGE_ROUTE = ":id/message/";
+export function createChatApp(
+  chatResource: IDatabaseResource<DBChat, DBCreateChat>,
+  messageResource: IDatabaseResource<DBMessage, DBCreateMessage>,
+) {
+  const chatApp = new Hono<ContextVariables>();
 
-export const chatApp = new Hono();
+  chatApp.post(CHAT_ROUTE, async (c) => {
+    const userId = c.get("userId");
+    const { name } = await c.req.json();
+    const data = await chatResource.create({ name, ownerId: userId });
+    return c.json({ data });
+  });
 
-const CHAT_ROUTE = "/chat/";
-const CHAT_MESSAGE_ROUTE = "/chat/:id/message";
+  chatApp.get(CHAT_ROUTE, async (c) => {
+    const userId = c.get("userId");
+    const data = await chatResource.findAll({ ownerId: userId });
+    return c.json({ data });
+  });
 
-const chatResource = new SimpleInMemoryResource<DBChat, DBCreateChat>();
-const messageResource = new SimpleInMemoryResource<
-  DBMessage,
-  DBCreateMessage
->();
-chatApp.get(CHAT_ROUTE, async (c) => {
-  const { userId } = await c.req.context;
-  const data = await chatResource.findAll({ ownerId: userId });
-  return c.json({ data });
-});
+  chatApp.get(CHAT_MESSAGE_ROUTE, async (c) => {
+    // get correctly from path
+    const { id: chatId } = c.req.param();
+    const data = await messageResource.findAll({ chatId });
+    return c.json({ data });
+  });
 
-chatApp.get(CHAT_MESSAGE_ROUTE, async (c) => {
-  // get correctly from path
-  const { id: chatId } = c.req.param();
-  const data = await messageResource.findAll({ chatId });
-  return c.json({ data });
-});
+  chatApp.post(CHAT_MESSAGE_ROUTE, async (c) => {
+    // get correctly from path
+    const { id: chatId } = c.req.param();
+    // validate
+    const { message } = await c.req.json();
 
-chatApp.post(CHAT_MESSAGE_ROUTE, async (c) => {
-  // get correctly from path
-  const { id: chatId } = c.req.param();
-  // validate
-  const { message } = await c.req.json();
+    const userMessage: DBCreateMessage = { message, chatId, type: "user" };
+    await messageResource.create(userMessage);
 
-  const userMessage: DBCreateMessage = { message, chatId, type: "user" };
-  await messageResource.create(userMessage);
+    const responseMessage: DBCreateMessage = {
+      message: "dummy response",
+      chatId,
+      type: "user",
+    };
 
-  const responseMessage: DBCreateMessage = {
-    message: "dummy response",
-    chatId,
-    type: "user",
-  };
+    const data = await messageResource.create(responseMessage);
 
-  const data = await messageResource.create(responseMessage);
-
-  return c.json({ data: responseMessage });
-});
+    return c.json({ data });
+  });
+  return chatApp;
+}

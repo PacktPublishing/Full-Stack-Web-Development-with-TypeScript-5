@@ -4,6 +4,5 @@ export interface IDatabaseResource<T, S> {
   get(id: string): Promise<T | null>;
   find(data: Partial<T>): Promise<T | null>;
   findAll(data: Partial<T>): Promise<T[]>;
-  getAll(): Promise<T[]>;
   delete(id: string): Promise<T | null>;
 }

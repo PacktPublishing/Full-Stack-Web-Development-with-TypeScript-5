@@ -2,8 +2,8 @@ import type { Email } from "./utils";
 
 export interface DBEntity {
   id: string;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface DBUser extends DBEntity {
@@ -25,6 +25,6 @@ export interface DBMessage extends DBEntity {
   message: string;
 }
 
-export type DBCreateUser = Pick<DBUser, "email" | "password">;
-export type DBCreateChat = Pick<DBChat, "name">;
+export type DBCreateUser = Pick<DBUser, "email" | "password" | "name">;
+export type DBCreateChat = Pick<DBChat, "name" | "ownerId">;
 export type DBCreateMessage = Pick<DBMessage, "chatId" | "message" | "type">;
