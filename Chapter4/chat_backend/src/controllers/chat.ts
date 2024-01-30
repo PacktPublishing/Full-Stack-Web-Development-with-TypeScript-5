@@ -10,6 +10,7 @@ import type { IDatabaseResource } from "../storage/types";
 
 export const CHAT_PREFIX = "/chat/";
 const CHAT_ROUTE = "";
+const CHAT_DETAIL_ROUTE = ":id/";
 const CHAT_MESSAGE_ROUTE = ":id/message/";
 export function createChatApp(
   chatResource: IDatabaseResource<DBChat, DBCreateChat>,
@@ -27,6 +28,13 @@ export function createChatApp(
   chatApp.get(CHAT_ROUTE, async (c) => {
     const userId = c.get("userId");
     const data = await chatResource.findAll({ ownerId: userId });
+    return c.json({ data });
+  });
+
+  chatApp.get(CHAT_DETAIL_ROUTE, async (c) => {
+    const { id } = c.req.param();
+    const userId = c.get("userId");
+    const data = await chatResource.find({ id, ownerId: userId });
     return c.json({ data });
   });
 
