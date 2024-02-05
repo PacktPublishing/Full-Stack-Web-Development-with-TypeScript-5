@@ -1,20 +1,25 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { Router, Route, navigate } from "svelte-routing";
+  import { authToken } from "../stores/auth";
   import ChatListSideBar from "../components/ChatListSideBar.svelte";
   import ChatDetails from "../components/ChatDetails.svelte";
-  import SelectChat from "../components/SelectChat.svelte";
-  import Logout from "../components/Logout.svelte";
 
-  export let id: string | undefined = undefined;
+  onMount(() => {
+    if (!$authToken) {
+      navigate("/register");
+    }
+  });
 </script>
 
 <div>
   <ChatListSideBar />
-  {#if id}
-    <ChatDetails chatId={id} />
-  {:else}
-    <SelectChat />
-  {/if}
-  <Logout />
+  <Router>
+    <Route path="/" />
+    <Route path="/:id" let:params>
+      <ChatDetails chatId={params.id} />
+    </Route>
+  </Router>
 </div>
 
 <style>

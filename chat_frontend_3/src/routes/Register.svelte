@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { navigate } from "svelte-routing";
-  import axios from "axios";
+  import axios, { AxiosError } from "axios";
   import "../styles/auth.css";
+  import { authToken } from "../stores/auth";
 
   let name = "";
   let email = "";
@@ -10,14 +12,20 @@
 
   const API_HOST = import.meta.env.VITE_API_HOST; // Ensure to set your API_HOST in .env file
 
+  onMount(() => {
+    if ($authToken) {
+      navigate("/");
+    }
+  });
+
   async function register() {
     try {
-      await axios.post(`${API_HOST}/api/v1/auth/register/`, {
+      const response = await axios.post(`${API_HOST}/api/v1/auth/register/`, {
         name,
         email,
         password,
       });
-      navigate("/login/");
+      navigate("/login");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         errorMessage = error.response?.data?.message;

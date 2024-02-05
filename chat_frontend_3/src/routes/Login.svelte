@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { navigate } from "svelte-routing";
   import axios from "axios";
   import "../styles/auth.css";
@@ -9,6 +10,11 @@
   let errorMessage = "";
 
   const API_HOST = import.meta.env.VITE_API_HOST;
+  onMount(() => {
+    if ($authToken) {
+      navigate("/");
+    }
+  });
 
   async function login() {
     try {

@@ -4,18 +4,8 @@ import { createInMemoryApp } from "../src/controllers/main";
 describe("auth tests", () => {
   let app = createInMemoryApp();
 
-  // const app = createSQLApp();
-  // const pool = new Pool({
-  //   connectionString: Bun.env.DATABASE_URL,
-  // });
-
-  // const app = createORMApp();
-  // const prisma = new PrismaClient();
-
   beforeEach(async () => {
     app = createInMemoryApp();
-    // await resetSQLDB(pool);
-    // await resetORMDB(prisma);
   });
   test("POST /register - normal case", async () => {
     const jsonBody = {
