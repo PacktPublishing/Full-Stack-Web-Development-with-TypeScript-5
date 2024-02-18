@@ -1,15 +1,10 @@
 {
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
-    "lint": "eslint . --fix"
+    "dev": "bun run --hot src/index.ts"
   },
   "dependencies": {
-    "@prisma/client": "^5.7.1",
-    "@types/pg": "^8.10.9",
     "hono": "^3.11.11",
-    "pg": "^8.11.3",
-    "pino": "^8.17.2",
-    "prisma": "^5.7.1"
+    "pino": "^8.18.0"
   },
   "devDependencies": {
     "@hono/eslint-config": "^0.0.3",
