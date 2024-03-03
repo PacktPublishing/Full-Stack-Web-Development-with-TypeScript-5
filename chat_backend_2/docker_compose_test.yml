@@ -9,5 +9,3 @@ services:
       POSTGRES_PASSWORD: test
     ports:
       - "5434:5432"
-    volumes:
-      - ./data/postgres_test:/var/lib/postgresql/data

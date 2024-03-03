@@ -1,3 +1,5 @@
+import { PrismaClient } from "@prisma/client";
+
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { showRoutes } from "hono/dev";
@@ -18,6 +20,11 @@ import type {
   DBUser,
 } from "../models/db";
 import { SimpleInMemoryResource } from "../storage/in_memory";
+import {
+  ChatDBResource,
+  MessageDBResource,
+  UserDBResource,
+} from "../storage/orm";
 import {
   ChatSQLResource,
   MessageSQLResource,
@@ -70,5 +77,13 @@ export function createSQLApp() {
   return createMainApp(
     createAuthApp(new UserSQLResource(pool)),
     createChatApp(new ChatSQLResource(pool), new MessageSQLResource(pool)),
+  );
+}
+export function createORMApp() {
+  const prisma = new PrismaClient();
+  prisma.$connect();
+  return createMainApp(
+    createAuthApp(new UserDBResource(prisma)),
+    createChatApp(new ChatDBResource(prisma), new MessageDBResource(prisma)),
   );
 }

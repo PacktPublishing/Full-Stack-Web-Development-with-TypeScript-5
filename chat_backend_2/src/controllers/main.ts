@@ -81,6 +81,7 @@ export function createSQLApp() {
 }
 export function createORMApp() {
   const prisma = new PrismaClient();
+  prisma.$connect();
   return createMainApp(
     createAuthApp(new UserDBResource(prisma)),
     createChatApp(new ChatDBResource(prisma), new MessageDBResource(prisma)),

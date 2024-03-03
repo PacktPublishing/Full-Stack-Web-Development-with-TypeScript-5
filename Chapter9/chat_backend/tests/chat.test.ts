@@ -1,17 +1,14 @@
+import { PrismaClient } from "@prisma/client";
 import { beforeEach, describe, expect, test } from "bun:test";
-import { Pool } from "pg";
-import { createSQLApp } from "../src/controllers/main";
-import { resetSQLDB } from "./utils";
+import { createORMApp } from "../src/controllers/main";
+import { resetORMDB } from "./utils";
 
 describe("chat tests", () => {
-  const app = createSQLApp();
-
-  const pool = new Pool({
-    connectionString: Bun.env.DATABASE_URL,
-  });
+  const app = createORMApp();
+  const prisma = new PrismaClient();
 
   beforeEach(async () => {
-    await resetSQLDB(pool);
+    await resetORMDB(prisma);
   });
 
   async function getToken(email = "test@test.com"): Promise<string> {

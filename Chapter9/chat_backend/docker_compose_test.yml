@@ -9,5 +9,3 @@ services:
       POSTGRES_PASSWORD: test
     ports:
       - "5434:5432"
-    volumes:
-      - ./data/init_scripts:/docker-entrypoint-initdb.d
