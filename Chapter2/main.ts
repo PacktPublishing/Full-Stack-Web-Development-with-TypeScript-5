@@ -179,7 +179,8 @@ type DbChatErrorResponse = {
 };
 
 function getChatFromDb(chatId: string): DbChatSuccessResponse | DbChatErrorResponse {
-    const chat = {} as IChat;
+    const findChatById = (_: string) => ({} as IChat)
+    const chat = findChatById(chatId);
     if (chat) {
         return {
             success: true,
