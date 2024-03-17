@@ -119,7 +119,7 @@ describe("chat tests", () => {
     expect(messages.data).toBeInstanceOf(Array);
     expect(messages.data.length).toBe(2);
     expect(messages.data[0].message).toBe("Hello World");
-    expect(messages.data[1].message).toBe("dummy response");
+    expect(messages.data[1].message?.length).toBeGreaterThan(0);
   });
 
   test("POST /chat - incorrect body", async () => {

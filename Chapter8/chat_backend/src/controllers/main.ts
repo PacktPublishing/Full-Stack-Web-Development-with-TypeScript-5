@@ -38,13 +38,13 @@ export function createMainApp(
 ) {
   const app = new Hono<ContextVariables>().basePath(API_PREFIX);
 
+  app.use("*", cors(corsOptions));
   app.use("*", timing());
   app.use("*", logger());
   app.use("*", checkJWTAuth);
   app.use("*", attachUserId);
   app.use("*", rateLimitMiddleware);
   app.use("*", cacheMiddleware());
-  app.use("*", cors(corsOptions));
 
   app.route(AUTH_PREFIX, authApp);
   app.route(CHAT_PREFIX, chatApp);

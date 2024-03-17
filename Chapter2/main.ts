@@ -161,7 +161,7 @@ const requiredUser: RequiredIUser = {id: 1, name: 'John', email: 'john@example.c
 
 // union types
 
-type MessageType = "user" | "system"
+type MessageType = "user" | "assistant"
 
 interface IMessageWithType {
     type: MessageType;

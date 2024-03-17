@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["es2023"],
     "esModuleInterop": true,
     "strict": true,
     "types": ["bun-types"]

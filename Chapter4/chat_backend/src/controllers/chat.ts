@@ -54,7 +54,7 @@ export function createChatApp(
     const responseMessage: DBCreateMessage = {
       message: "dummy response",
       chatId,
-      type: "user",
+      type: "assistant",
     };
 
     const data = await messageResource.create(responseMessage);

@@ -33,7 +33,7 @@ export function createChatApp(
 
   chatApp.post(CHAT_ROUTE, zValidator("json", chatSchema), async (c) => {
     const userId = c.get("userId");
-    const { name } = c.req.valid;
+    const { name } = c.req.valid("json");
     const data = await chatResource.create({ name, ownerId: userId });
     return c.json({ data });
   });
@@ -71,7 +71,7 @@ export function createChatApp(
       const responseMessage: DBCreateMessage = {
         message: "dummy response",
         chatId,
-        type: "user",
+        type: "assistant",
       };
 
       const data = await messageResource.create(responseMessage);

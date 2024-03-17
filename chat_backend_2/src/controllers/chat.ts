@@ -2,6 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
 import type { ContextVariables } from "../constants";
+import { generateMessageResponse } from "../intergrations/generate_message";
 import type {
   DBChat,
   DBCreateChat,
@@ -33,7 +34,7 @@ export function createChatApp(
 
   chatApp.post(CHAT_ROUTE, zValidator("json", chatSchema), async (c) => {
     const userId = c.get("userId");
-    const { name } = c.req.valid;
+    const { name } = c.req.valid("json");
     const data = await chatResource.create({ name, ownerId: userId });
     c.get("cache").clearPath(c.req.path);
     return c.json({ data });
@@ -75,10 +76,12 @@ export function createChatApp(
       const userMessage: DBCreateMessage = { message, chatId, type: "user" };
       await messageResource.create(userMessage);
 
+      const allMessage = await messageResource.findAll({ chatId });
+      const response = await generateMessageResponse(allMessage);
       const responseMessage: DBCreateMessage = {
-        message: "dummy response",
+        message: response,
         chatId,
-        type: "user",
+        type: "assistant",
       };
 
       const data = await messageResource.create(responseMessage);

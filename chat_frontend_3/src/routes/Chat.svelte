@@ -4,6 +4,7 @@
   import { authToken } from "../stores/auth";
   import ChatListSideBar from "../components/ChatListSideBar.svelte";
   import ChatDetails from "../components/ChatDetails.svelte";
+  export let chatId: string;
 
   onMount(() => {
     if (!$authToken) {
@@ -14,12 +15,9 @@
 
 <div>
   <ChatListSideBar />
-  <Router>
-    <Route path="/" />
-    <Route path="/:id" let:params>
-      <ChatDetails chatId={params.id} />
-    </Route>
-  </Router>
+  {#if chatId}
+    <ChatDetails chatId={chatId} />
+  {/if}
 </div>
 
 <style>

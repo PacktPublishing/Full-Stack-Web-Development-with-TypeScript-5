@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
+    "lib": ["es2023"],
     "esModuleInterop": true,
-    "strict": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
+    "strict": true
   }
 }

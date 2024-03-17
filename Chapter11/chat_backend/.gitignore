@@ -1,0 +1,4 @@
+node_modules
+data/postgres
+# Keep environment variables out of version control in real app
+#.env
