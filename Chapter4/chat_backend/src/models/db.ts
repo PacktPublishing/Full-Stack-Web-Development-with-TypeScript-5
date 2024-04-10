@@ -1,4 +1,4 @@
-type Email = `${string}@${string}.${string}`;
+export type Email = `${string}@${string}.${string}`;
 
 export interface DBEntity {
   id: string;

@@ -62,7 +62,7 @@ export function createAuthApp(
       return c.json({ error: ERROR_INVALID_CREDENTIALS }, 401);
     }
 
-    const { JWT_SECRET } = env<{ JWT_SECRET: string }>(c);
+    const { JWT_SECRET } = env<{ JWT_SECRET: string }, typeof c>(c);
     const token = await sign({ ...fulluser, password: undefined }, JWT_SECRET);
     return c.json({ token });
   });

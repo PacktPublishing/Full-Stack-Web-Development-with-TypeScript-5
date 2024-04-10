@@ -16,7 +16,7 @@ export async function checkJWTAuth(
   ) {
     return await next();
   } else {
-    const { JWT_SECRET } = env<{ JWT_SECRET: string }>(c);
+    const { JWT_SECRET } = env<{ JWT_SECRET: string }, typeof c>(c);
     const jwtMiddleware = jwt({
       secret: JWT_SECRET,
     });

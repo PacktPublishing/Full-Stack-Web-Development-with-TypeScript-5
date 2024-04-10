@@ -34,7 +34,7 @@ import { AUTH_PREFIX, createAuthApp } from "./auth";
 import { CHAT_PREFIX, createChatApp } from "./chat";
 
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: [Bun.env.CORS_ORIGIN as string],
   allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowHeaders: ["Content-Type", "Authorization"],
   maxAge: 86400,

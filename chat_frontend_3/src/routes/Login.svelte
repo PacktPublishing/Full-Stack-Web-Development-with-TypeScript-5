@@ -8,6 +8,7 @@
   let email = "";
   let password = "";
   let errorMessage = "";
+  $: formValid = email.length > 0 && password.length > 0;
 
   const API_HOST = import.meta.env.VITE_API_HOST;
   onMount(() => {
@@ -25,15 +26,22 @@
       authToken.set(response.data?.token);
       navigate("/");
     } catch (error) {
+      const defaultError = "An unexpected error occurred"
       if (axios.isAxiosError(error) && error.response) {
-        errorMessage = error.response?.data?.message;
+        const errorSlug = error?.response?.data?.error
+        switch(errorSlug) {
+          case "INVALID_CREDENTIALS":
+            errorMessage = "Invalid email or password"
+            break;
+          default:
+            errorMessage = defaultError
+        }
       } else {
-        errorMessage = "An unexpected error occurred";
+        errorMessage = defaultError
       }
     }
   }
 
-  const formValid = email.length > 0 && password.length > 0;
 </script>
 
 <div class="auth-container">
@@ -56,7 +64,7 @@
       />
     </div>
     <div class="action-group">
-      <button type="submit" class="auth-btn" disabled={formValid}
+      <button type="submit" class="auth-btn" disabled={!formValid}
         >Sign in</button
       >
     </div>

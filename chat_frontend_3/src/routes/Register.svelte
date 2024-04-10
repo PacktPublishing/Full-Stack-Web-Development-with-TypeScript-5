@@ -1,10 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { navigate } from "svelte-routing";
-  import axios, { AxiosError } from "axios";
+  import axios from "axios";
   import "../styles/auth.css";
   import { authToken } from "../stores/auth";
-
   let name = "";
   let email = "";
   let password = "";
@@ -20,17 +19,25 @@
 
   async function register() {
     try {
-      const response = await axios.post(`${API_HOST}/api/v1/auth/register/`, {
+      await axios.post(`${API_HOST}/api/v1/auth/register/`, {
         name,
         email,
         password,
       });
       navigate("/login");
     } catch (error) {
+      const defaultError = "An unexpected error occurred"
       if (axios.isAxiosError(error) && error.response) {
-        errorMessage = error.response?.data?.message;
+        const errorSlug = error?.response?.data?.error
+        switch(errorSlug) {
+          case "ERROR_USER_ALREADY_EXIST":
+            errorMessage = "User already exists, try logging in instead"
+            break;
+          default:
+            errorMessage = defaultError
+        }
       } else {
-        errorMessage = "An unexpected error occurred";
+        errorMessage = defaultError
       }
     }
   }
