@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    height: 90vh;
+}
+
+.chat-list-container {
+    flex: 0 0 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat-container {
+    flex: 1;
+}

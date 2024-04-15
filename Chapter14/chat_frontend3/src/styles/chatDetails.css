@@ -1,0 +1,29 @@
+.chat-details-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin: 5px 0;
+}
+
+textarea {
+    resize: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}

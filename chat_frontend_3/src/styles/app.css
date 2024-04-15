@@ -3,9 +3,7 @@ form {
   flex-direction: column;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"] {
+input {
   margin-bottom: 10px;
   padding: 8px;
   border: 1px solid #ccc;
@@ -21,11 +19,16 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background-color: #0876fa;
+}
+
 button:disabled {
   background-color: grey;
 }
 
 .error {
   color: red;
+  font-weight: bold;
   margin-bottom: 10px;
 }
