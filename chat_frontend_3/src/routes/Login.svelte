@@ -4,7 +4,7 @@
   import axios from "axios";
   import "../styles/auth.css";
   import { authToken } from "../stores/auth";
-  import {API_HOST} from "../constants";
+  import { API_HOST } from "../constants";
 
   let email = "";
   let password = "";
@@ -26,22 +26,21 @@
       authToken.set(response.data?.token);
       navigate("/");
     } catch (error) {
-      const defaultError = "An unexpected error occurred"
+      const defaultError = "An unexpected error occurred";
       if (axios.isAxiosError(error) && error.response) {
-        const errorSlug = error?.response?.data?.error
-        switch(errorSlug) {
+        const errorSlug = error?.response?.data?.error;
+        switch (errorSlug) {
           case "INVALID_CREDENTIALS":
-            errorMessage = "Invalid email or password"
+            errorMessage = "Invalid email or password";
             break;
           default:
-            errorMessage = defaultError
+            errorMessage = defaultError;
         }
       } else {
-        errorMessage = defaultError
+        errorMessage = defaultError;
       }
     }
   }
-
 </script>
 
 <div class="auth-container">

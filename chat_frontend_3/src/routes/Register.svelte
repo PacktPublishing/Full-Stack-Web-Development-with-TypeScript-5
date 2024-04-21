@@ -4,7 +4,7 @@
   import axios from "axios";
   import "../styles/auth.css";
   import { authToken } from "../stores/auth";
-  import {API_HOST} from "../constants";
+  import { API_HOST } from "../constants";
   let name = "";
   let email = "";
   let password = "";
@@ -25,18 +25,18 @@
       });
       navigate("/login");
     } catch (error) {
-      const defaultError = "An unexpected error occurred"
+      const defaultError = "An unexpected error occurred";
       if (axios.isAxiosError(error) && error.response) {
-        const errorSlug = error?.response?.data?.error
-        switch(errorSlug) {
+        const errorSlug = error?.response?.data?.error;
+        switch (errorSlug) {
           case "ERROR_USER_ALREADY_EXIST":
-            errorMessage = "User already exists, try logging in instead"
+            errorMessage = "User already exists, try logging in instead";
             break;
           default:
-            errorMessage = defaultError
+            errorMessage = defaultError;
         }
       } else {
-        errorMessage = defaultError
+        errorMessage = defaultError;
       }
     }
   }

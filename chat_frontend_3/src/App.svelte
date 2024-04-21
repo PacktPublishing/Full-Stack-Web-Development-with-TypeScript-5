@@ -8,10 +8,10 @@
 <Router>
   <Route path="/register" component={Register} />
   <Route path="/login" component={Login} />
-  <Route >
+  <Route>
     <Chat chatId={null} />
   </Route>
-  <Route path="/:id"  let:params  >
+  <Route path="/:id" let:params>
     <Chat chatId={params.id} />
   </Route>
 </Router>

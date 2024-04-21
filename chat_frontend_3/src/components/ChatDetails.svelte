@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import axios from "axios";
-  import {API_HOST} from "../constants";
-  import '../styles/chatDetails.css'
+  import { API_HOST } from "../constants";
+  import "../styles/chatDetails.css";
   export let chatId: string;
-  let messages: { message: string, createdAt: number }[] = [];
+  let messages: { id: string; message: string; createdAt: number }[] = [];
   let newMessage = "";
   let errorMessage: string | null = null;
   let isLoading = false;
@@ -16,7 +16,7 @@
   async function loadMessages() {
     try {
       const response = await axios.get(
-        `${API_HOST}/api/v1/chat/${chatId}/message/`
+        `${API_HOST}/api/v1/chat/${chatId}/message/`,
       );
       messages = response.data.data;
     } catch (error) {
@@ -30,9 +30,13 @@
     try {
       const response = await axios.post(
         `${API_HOST}/api/v1/chat/${chatId}/message/`,
-        { message: newMessage }
+        { message: newMessage },
       );
-      messages = [...messages, {message:newMessage, createdAt: Date.now()}, response.data.data];
+      messages = [
+        ...messages,
+        { message: newMessage, createdAt: Date.now() },
+        response.data.data,
+      ];
       newMessage = "";
     } catch (error) {
       errorMessage = "Failed to send message. Please try again later.";
@@ -52,7 +56,7 @@
     <div class="error">{errorMessage}</div>
   {/if}
   <ul>
-    {#each messages as message}
+    {#each messages as message (message.id)}
       <li>
         {message.message}
         <span>{new Date(message.createdAt).toLocaleTimeString()}</span>
