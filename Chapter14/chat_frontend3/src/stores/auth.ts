@@ -15,7 +15,7 @@ function createAuthStore() {
   if (token) {
     setAxiousAuth(token);
   }
-  const { subscribe, set, update } = writable<string | null>(token);
+  const { subscribe, set } = writable<string | null>(token);
 
   return {
     subscribe,
