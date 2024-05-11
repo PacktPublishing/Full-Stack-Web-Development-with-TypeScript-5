@@ -3,7 +3,7 @@ import { callGPTAPI } from "./api";
 import { retryWrapper } from "./retry";
 import { validateGPTResponse } from "./validation";
 
-async function getGPTAnswer(data: object) {
+export async function getGPTAnswer(data: object) {
   try {
     const response = await retryWrapper(() => callGPTAPI(data));
     const message = await validateGPTResponse(response);
