@@ -1,5 +1,4 @@
 import { HTTPException } from "hono/http-exception";
-import type { DBMessage } from "../models/db";
 import { callGPTAPI } from "./api";
 import { retryWrapper } from "./retry";
 import { validateGPTResponse } from "./validation";
