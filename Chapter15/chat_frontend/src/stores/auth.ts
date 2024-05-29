@@ -6,14 +6,14 @@ interface TokenPayload {
   name: string;
 }
 
-function setAxiousAuth(token: string) {
+function setAxiosAuth(token: string) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
 function createAuthStore() {
   const token = localStorage.getItem("authToken");
   if (token) {
-    setAxiousAuth(token);
+    setAxiosAuth(token);
   }
   const { subscribe, set } = writable<string | null>(token);
 
@@ -23,7 +23,7 @@ function createAuthStore() {
       localStorage.setItem("authToken", value);
       set(value);
       if (value) {
-        setAxiousAuth(value);
+        setAxiosAuth(value);
       } else {
         delete axios.defaults.headers.common["Authorization"];
       }
