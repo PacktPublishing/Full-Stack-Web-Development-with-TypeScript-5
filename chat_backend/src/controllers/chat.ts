@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { z } from "zod";
 import type { ContextVariables } from "../constants";
-import { generateMessageResponse } from "../intergrations/generate_message";
+import { generateMessageResponse } from "../integrations/generate_message";
 import type {
   DBChat,
   DBCreateChat,
