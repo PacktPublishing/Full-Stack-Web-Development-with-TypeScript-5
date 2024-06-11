@@ -24,7 +24,7 @@ button:hover {
 }
 
 button:disabled {
-  background-color: grey;
+  background-color: gray;
 }
 
 .error {
